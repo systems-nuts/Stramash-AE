@@ -65,7 +65,7 @@ insmod stramash_msg_shm.ko
 # For last SHM Machines pair run
 insmod shm_msg_shm.ko
 
-Please run following command.
+Please run the following command.
 
 # Run NPB benchmark
 $BIN could be one of the 4 (cg/is/ft/mg)
@@ -75,7 +75,7 @@ cd ./NPB_AE/$BIN;cat /proc/cache_sync_switch;cat /proc/popcorn_icount_switch;
 
 #### 7. Check the Results 
 ```bash
-EXAMPLE RESULT shows below
+EXAMPLE RESULT shown below
 
 
 Both Shared and Separated model
@@ -85,7 +85,11 @@ For the Fully Shared model, because there is no remote access, we can just minus
 Fully Shared = Final Runtime - Remote Memory Hits  * 0.455 (Either use the result from Separated model or Shared model) 
 
 0.455 is the difference between remote access and local access.
-Check the file  ->
+Check the file  -> https://github.com/systems-nuts/Stramash-AE/blob/main/stramash-qemu/contrib/plugins/cache-sim-feedback.c#L215
+#define Local_mem_overhead 360
+#define Remote_mem_overhead 660
+660/360 => 0.455
+We use this to reduce the Machine to run.
 
 
 For SHM, it is the same, however, because only the access to the message ring will be counted as remote access
@@ -94,9 +98,9 @@ Thus, SHM Fully Shared = Final Runtime - Remote Memory Hits  * 0.455
 Same since fully shared doesn't have remote access. 
 
 SHM Separated = Final Runtime - Remote Memory Hits(arm) * 0.455
-Because in separated model, the x86 access to the shared memory ring is local, while it is expose to arm through sim CXL, so we consider arm access will be remote access
+Because in the separated model, the x86 access to the shared memory ring is local, while it is exposed to arm through sim CXL, so we consider arm access to be remote access
 
-For Shared model, both access to ring buffer will consider as remote, just  => x86 Runtime + arm Runtime
+For the Shared model, both access to the ring buffer will be considered as remote, just  => x86 Runtime + arm Runtime
 
 ```
 ![1ce570995205f6cba0bf2e43502fb43](https://github.com/user-attachments/assets/0a496074-2221-4b9a-8fbc-352ef0180740)
