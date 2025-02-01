@@ -78,6 +78,7 @@ cd ./NPB_AE/$BIN;cat /proc/cache_sync_switch;cat /proc/popcorn_icount_switch;
 ```bash
 EXAMPLE RESULT shown below
 
+The EXPERIMENT WE ARE EVALUATION IS: Figure 9. NPB benchmark results
 
 Both Shared and Separated model
 Final Runtime = x86 Runtime + arm Runtime
