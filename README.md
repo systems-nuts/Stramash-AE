@@ -58,7 +58,8 @@ We have 3 different memory models, once the start opens, it opens 3 pair of mach
 First is the Stramash Shard model, Second is the Stramash Separated model, and Third is the SHM
 
 In each tmux window, you see 2 machines, left is x86,and  right is arm, or you can use $(uname -a) to check
-Remember depends on speed, usually x86 is slower since it has more instructions, so insert the module on x86 side first, wait for 3sec, insert arm module
+Remember depends on speed, usually x86 is slower since it has more instructions,
+so insert the module on x86 side first, wait for 3sec, insert arm module
 
 # For first 2 Stramash Machines pair run
 insmod stramash_msg_shm.ko
@@ -81,7 +82,8 @@ EXAMPLE RESULT shown below
 Both Shared and Separated model
 Final Runtime = x86 Runtime + arm Runtime
 
-For the Fully Shared model, because there is no remote access, we can just minus the feedback instruction from our cache model
+For the Fully Shared model, because there is no remote access, we can just
+ minus the feedback instruction from our cache model
 Fully Shared = Final Runtime - Remote Memory Hits  * 0.455 (Either use the result from Separated model or Shared model) 
 
 0.455 is the difference between remote access and local access.
@@ -97,8 +99,10 @@ Final Runtime = x86 Runtime + arm Runtime
 Thus, SHM Fully Shared = Final Runtime - Remote Memory Hits  * 0.455
 Same since fully shared doesn't have remote access. 
 
-SHM Separated = Final Runtime - Remote Memory Hits(arm) * 0.455
-Because in the separated model, the x86 access to the shared memory ring is local, while it is exposed to arm through sim CXL, so we consider arm access to be remote access
+SHM Separated = Final Runtime - Remote Memory Hits(only x86) * 0.455
+Because in the separated model, the x86 access to the shared memory ring is local,
+while it is exposed to the arm through sim CXL, so we consider arm access to be remote access,
+so the total runtime will be minus by the Remote Memory Hits of x86, which we consider is local now.
 
 For the Shared model, both access to the ring buffer will be considered as remote, just  => x86 Runtime + arm Runtime
 
