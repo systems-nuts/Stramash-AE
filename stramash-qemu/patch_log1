@@ -1,0 +1,200 @@
+patching file accel/tcg/cputlb.c
+Hunk #1 succeeded at 57 (offset -2 lines).
+Hunk #2 succeeded at 1755 with fuzz 1 (offset 3 lines).
+patching file accel/tcg/tcg-accel-ops-icount.c
+Hunk #1 succeeded at 46 (offset -2 lines).
+patching file backends/hostmem-ram.c
+Hunk #2 FAILED at 19.
+Hunk #3 FAILED at 27.
+2 out of 3 hunks FAILED -- saving rejects to file backends/hostmem-ram.c.rej
+patching file contrib/plugins/hotpages.c
+patching file contrib/plugins/hwprofile.c
+Hunk #3 FAILED at 274.
+1 out of 3 hunks FAILED -- saving rejects to file contrib/plugins/hwprofile.c.rej
+patching file contrib/plugins/Makefile
+Hunk #1 FAILED at 18.
+Hunk #2 succeeded at 35 (offset 4 lines).
+1 out of 2 hunks FAILED -- saving rejects to file contrib/plugins/Makefile.rej
+patching file hw/arm/boot.c
+Hunk #1 succeeded at 533 (offset 5 lines).
+Hunk #2 FAILED at 600.
+Hunk #3 succeeded at 634 (offset 18 lines).
+1 out of 3 hunks FAILED -- saving rejects to file hw/arm/boot.c.rej
+patching file hw/arm/Kconfig
+Hunk #1 FAILED at 28.
+1 out of 1 hunk FAILED -- saving rejects to file hw/arm/Kconfig.rej
+patching file hw/arm/virt.c
+Hunk #1 succeeded at 27 with fuzz 2.
+Hunk #2 succeeded at 41 (offset -3 lines).
+Hunk #3 succeeded at 161 (offset 1 line).
+Hunk #4 succeeded at 203 (offset 7 lines).
+Hunk #5 succeeded at 405 (offset 22 lines).
+Hunk #6 succeeded at 444 with fuzz 1 (offset 27 lines).
+Hunk #7 FAILED at 635.
+Hunk #8 succeeded at 780 (offset 104 lines).
+Hunk #9 succeeded at 947 (offset 104 lines).
+Hunk #10 succeeded at 1590 (offset 105 lines).
+Hunk #11 succeeded at 1837 (offset 173 lines).
+Hunk #12 succeeded at 1864 with fuzz 2 (offset 174 lines).
+Hunk #13 succeeded at 1957 (offset 252 lines).
+Hunk #14 FAILED at 1723.
+Hunk #15 FAILED at 1786.
+Hunk #16 succeeded at 2138 (offset 219 lines).
+Hunk #17 succeeded at 2264 (offset 226 lines).
+Hunk #18 succeeded at 2326 with fuzz 1 (offset 226 lines).
+Hunk #19 FAILED at 2121.
+Hunk #20 FAILED at 2164.
+Hunk #21 FAILED at 2781.
+6 out of 21 hunks FAILED -- saving rejects to file hw/arm/virt.c.rej
+patching file hw/char/Kconfig
+Hunk #1 succeeded at 71 with fuzz 2 (offset 4 lines).
+patching file hw/core/register.c
+Hunk #5 succeeded at 325 (offset 12 lines).
+patching file hw/gpio/sifive_gpio.c
+patching file hw/i386/Kconfig
+Hunk #1 succeeded at 45 (offset 9 lines).
+patching file hw/i386/microvm.c
+Hunk #1 succeeded at 315 (offset -2 lines).
+patching file hw/i386/pc.c
+Hunk #2 succeeded at 52 (offset 1 line).
+Hunk #3 succeeded at 1011 (offset 127 lines).
+Hunk #4 succeeded at 1031 with fuzz 1 (offset 132 lines).
+Hunk #5 FAILED at 1181.
+Hunk #6 succeeded at 1397 (offset 175 lines).
+1 out of 6 hunks FAILED -- saving rejects to file hw/i386/pc.c.rej
+patching file hw/i386/pc_piix.c
+Hunk #1 succeeded at 87 with fuzz 2 (offset 14 lines).
+patching file hw/intc/apic.c
+Hunk #1 succeeded at 31 (offset 1 line).
+Hunk #2 succeeded at 54 (offset 1 line).
+Hunk #3 succeeded at 662 (offset 1 line).
+Hunk #4 succeeded at 673 (offset 1 line).
+Hunk #5 succeeded at 724 (offset 1 line).
+Hunk #6 succeeded at 736 (offset 1 line).
+Hunk #7 succeeded at 1094 (offset 1 line).
+Hunk #8 succeeded at 1106 (offset 1 line).
+Hunk #9 succeeded at 1152 (offset 1 line).
+Hunk #10 succeeded at 1173 (offset 1 line).
+patching file hw/intc/arm_gicv3.c
+Hunk #1 FAILED at 14.
+Hunk #2 succeeded at 202 (offset 12 lines).
+Hunk #3 succeeded at 413 (offset 14 lines).
+1 out of 3 hunks FAILED -- saving rejects to file hw/intc/arm_gicv3.c.rej
+patching file hw/intc/arm_gicv3_common.c
+Hunk #3 FAILED at 492.
+Hunk #4 succeeded at 503 with fuzz 2 (offset -63 lines).
+Hunk #5 succeeded at 773 (offset 67 lines).
+Hunk #6 FAILED at 720.
+2 out of 6 hunks FAILED -- saving rejects to file hw/intc/arm_gicv3_common.c.rej
+patching file hw/intc/arm_gicv3_cpuif.c
+Hunk #1 succeeded at 1849 (offset 171 lines).
+patching file hw/intc/arm_gicv3_redist.c
+Hunk #1 succeeded at 1145 (offset 584 lines).
+Hunk #2 succeeded at 1155 (offset 584 lines).
+patching file hw/intc/gicv3_internal.h
+Hunk #1 FAILED at 24.
+Hunk #2 succeeded at 849 (offset 439 lines).
+1 out of 2 hunks FAILED -- saving rejects to file hw/intc/gicv3_internal.h.rej
+patching file hw/Kconfig
+Hunk #1 succeeded at 43 with fuzz 2 (offset 4 lines).
+Hunk #2 FAILED at 83.
+1 out of 2 hunks FAILED -- saving rejects to file hw/Kconfig.rej
+!patching file hw/meson.build
+!Hunk #1 succeeded at 43 (offset 3 lines).
+!patching file hw/misc/ivshmem.c
+!Hunk #3 succeeded at 239 with fuzz 2.
+!Hunk #4 succeeded at 276 with fuzz 2.
+!Hunk #5 succeeded at 962 (offset 2 lines).
+!patching file hw/misc/Kconfig
+!Hunk #1 succeeded at 180 with fuzz 2 (offset -6 lines).
+!patching file hw/misc/meson.build
+!Hunk #1 succeeded at 36 with fuzz 2 (offset -6 lines).
+!patching file hw/riscv/virt.c
+!Hunk #1 FAILED at 57.
+!Hunk #2 FAILED at 537.
+!Hunk #3 FAILED at 659.
+!3 out of 3 hunks FAILED -- saving rejects to file hw/riscv/virt.c.rej
+!patching file include/hw/arm/boot.h
+!Hunk #1 succeeded at 130 (offset 15 lines).
+!patching file include/hw/arm/virt.h
+!patching file include/hw/core/cpu.h
+!Hunk #1 succeeded at 448 (offset 14 lines).
+!patching file include/hw/core/tcg-cpu-ops.h
+!Hunk #1 FAILED at 47.
+!i1 out of 1 hunk FAILED -- saving rejects to file include/hw/core/tcg-cpu-ops.h.rej
+!patching file include/hw/i386/apic_internal.h
+!patching file include/hw/intc/arm_gicv3_common.h
+!Hunk #2 FAILED at 251.
+!Hunk #3 succeeded at 326 (offset 34 lines).
+!i1 out of 3 hunks FAILED -- saving rejects to file include/hw/intc/arm_gicv3_common.h.rej
+!patching file include/hw/riscv/virt.h
+!Hunk #1 FAILED at 59.
+!1 out of 1 hunk FAILED -- saving rejects to file include/hw/riscv/virt.h.rej
+!patching file include/qemu/plugin.h
+!Hunk #1 FAILED at 12.
+!i1 out of 1 hunk FAILED -- saving rejects to file include/qemu/plugin.h.rej
+!patching file include/qemu/plugin-memory.h
+!Hunk #1 succeeded at 26 (offset 3 lines).
+!Hunk #2 FAILED at 42.
+!i1 out of 2 hunks FAILED -- saving rejects to file include/qemu/plugin-memory.h.rej
+!patching file include/qemu/qemu-plugin.h
+!Hunk #1 succeeded at 403 (offset 1 line).
+!Hunk #2 succeeded at 450 (offset 1 line).
+!Hunk #3 FAILED at 487.
+!Hunk #4 FAILED at 557.
+!i2 out of 4 hunks FAILED -- saving rejects to file include/qemu/qemu-plugin.h.rej
+!patching file include/sysemu/cpu-timers.h
+!patching file Makefile
+!Hunk #1 succeeded at 187 with fuzz 2 (offset 10 lines).
+!Hunk #2 succeeded at 226 with fuzz 1 (offset 7 lines).
+!patching file meson.build
+!Hunk #1 succeeded at 3215 with fuzz 2 (offset 1219 lines).
+!Hunk #2 FAILED at 2377.
+!1 out of 2 hunks FAILED -- saving rejects to file meson.build.rej
+!patching file plugins/api.c
+!Hunk #1 FAILED at 38.
+!Hunk #2 succeeded at 278 (offset 12 lines).
+!Hunk #3 succeeded at 304 (offset 15 lines).
+!Hunk #4 succeeded at 334 with fuzz 1 (offset 15 lines).
+!Hunk #5 succeeded at 455 with fuzz 2 (offset 63 lines).
+!i1 out of 5 hunks FAILED -- saving rejects to file plugins/api.c.rej
+!patching file plugins/qemu-plugins.symbols
+!Hunk #1 FAILED at 31.
+!i1 out of 1 hunk FAILED -- saving rejects to file plugins/qemu-plugins.symbols.rej
+!patching file qom/object.c
+!Hunk #1 succeeded at 316 (offset 2 lines).
+!patching file softmmu/icount.c
+!Hunk #1 succeeded at 56 (offset -1 lines).
+!Hunk #2 succeeded at 68 (offset -1 lines).
+!Hunk #3 succeeded at 85 (offset -1 lines).
+!Hunk #4 succeeded at 146 (offset -1 lines).
+!Hunk #5 succeeded at 174 (offset -1 lines).
+!Hunk #6 succeeded at 251 (offset -1 lines).
+!Hunk #7 succeeded at 268 (offset -1 lines).
+!Hunk #8 succeeded at 277 (offset -1 lines).
+!Hunk #9 succeeded at 299 (offset -1 lines).
+!Hunk #10 succeeded at 321 (offset -1 lines).
+!Hunk #11 succeeded at 373 (offset -1 lines).
+!Hunk #12 succeeded at 429 (offset -1 lines).
+!Hunk #13 succeeded at 537 (offset 1 line).
+!patching file softmmu/qdev-monitor.c
+
+!1 out of 1 hunk FAILED -- saving rejects to file softmmu/qdev-monitor.c.rej
+!patching file softmmu/vl.c
+!Hunk #1 succeeded at 1133 (offset -71 lines).
+!Hunk #2 FAILED at 2296.
+!1 out of 2 hunks FAILED -- saving rejects to file softmmu/vl.c.rej
+!patching file target/i386/cpu.c
+!Hunk #2 FAILED at 4271.
+!Hunk #3 FAILED at 4280.
+Hunk #4 FAILED at 6310.
+!Hunk #5 FAILED at 6317.
+!4 out of 5 hunks FAILED -- saving rejects to file target/i386/cpu.c.rej
+!patching file tests/plugin/insn.c
+!Hunk #1 FAILED at 17.
+!Hunk #2 FAILED at 40.
+!Hunk #3 FAILED at 62.
+!3 out of 3 hunks FAILED -- saving rejects to file tests/plugin/insn.c.rej
+!patching file util/event_notifier-posix.c
+!Hunk #1 succeeded at 125 (offset 2 lines).
+!Hunk #2 succeeded at 134 (offset 2 lines).
