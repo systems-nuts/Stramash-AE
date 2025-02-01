@@ -64,8 +64,9 @@ static void apic_interrupt_cb(void *opaque)
     
     apic_set_irq(apic, 0xdd, 0);
     //TODO: add stuff here
+	//receive TONG: this is receive
     int send_msg = 0xdead;
-    write(apic->ipi_fifo_fd, &send_msg, sizeof(send_msg)); 
+    write(apic->ipi_fifo_fd_out, &send_msg, sizeof(send_msg)); 
 
     CPU(apic->cpu)->pending_ipi = true;
 }
@@ -175,16 +176,13 @@ static void apic_send_interrupt(void *opaque, int target)
         printf("target is too large\n");
         return;
     }
-	target =0; //Let's fix VM id, vm id is for each core
-	//thus, all interrupt is set event notify at core 0.
-	//Need to collaborate with ARM. 
     event_notifier_set(&s->eventfd[target]);
     int recv_buf;   
-    read(s->ipi_fifo_fd, &recv_buf, sizeof(recv_buf));
-//	printf("id %d %x target %d\n",s->id, recv_buf, target);
-//    if (recv_buf != 0xbeef) {
-//        printf("Data received is %x instead of 0xbeef for x86!\n", recv_buf);
-  //  }
+    read(s->ipi_fifo_fd_in, &recv_buf, sizeof(recv_buf));
+	//THIS is SEND!
+    if (recv_buf != 0xbeef) {
+        printf("Data received is %x instead of 0xbeef for x86!\n", recv_buf);
+    }
 
 }
 
@@ -658,13 +656,15 @@ static int apic_find_dest(uint8_t dest)
 
     return -1;
 }
-//HERE Is the place where the apic fucked up to boot AP 
+
 static void apic_get_delivery_bitmask(uint32_t *deliver_bitmask,
                                       uint8_t dest, uint8_t dest_mode)
 {
     APICCommonState *apic_iter;
     int i;
+
     if (dest_mode == 0) {
+        // printf("apic operating in physical mode\n");
         // TODO: this is the physical mode. QEMU *never* operates here
         if (dest == 0xff) {
             memset(deliver_bitmask, 0xff, MAX_APIC_WORDS * sizeof(uint32_t));
@@ -677,7 +677,7 @@ static void apic_get_delivery_bitmask(uint32_t *deliver_bitmask,
     } else {
         //TODO: this is the logical mode
         /* XXX: cluster mode */
-        //printf("apic operating in cluster mode\n");
+        // printf("apic operating in cluster mode\n");
         memset(deliver_bitmask, 0x00, MAX_APIC_WORDS * sizeof(uint32_t));
         for(i = 0; i < MAX_APICS; i++) {
             apic_iter = local_apics[i];
@@ -686,25 +686,16 @@ static void apic_get_delivery_bitmask(uint32_t *deliver_bitmask,
                     //TODO: this dest_mode differs between cluster and flat
                     //this is flat
                     if (dest & apic_iter->log_dest)
+                        // printf("apic operating in logical flat mode, dest is %x\n", dest);
                         apic_set_bit(deliver_bitmask, i);
-						
-                    if (dest> (2)) { //here if the destination is larger than core mask
-						//current fix support for 2 core QEMU
-						//send should goes to 3, as we have 2 core..
-                        //lets make it fix first
-                        //also, we need redirect interrupt from other core.
-                        //so the interrupt aways go to 3, that is ok
-                        //but receive can only be 1.. which is not good
-                        //but make it as step 1. so app run in core 0 work
-                        //then we redirect interrupt there.
-                        //so in kernel we should send interrupt to 3
-
+                    if (dest == (1 << 1)) {
                         //TODO: send logic is correct, receive logic isn't
                         APICCommonClass *info = APIC_COMMON_GET_CLASS(apic_iter);
                         info->send_interrupt(apic_iter, (apic_iter->vm_id == 1) ? 0 : 1);
-					}
+                    }
                 } else if (apic_iter->dest_mode == 0x0) {
                     // TODO: qemu never enters here: this is cluster mode
+                    // printf("apic operating in logical cluster mode\n");
                     if ((dest & 0xf0) == (apic_iter->log_dest & 0xf0) &&
                         (dest & apic_iter->log_dest & 0x0f)) {
                         apic_set_bit(deliver_bitmask, i);
@@ -728,9 +719,9 @@ void apic_sipi(DeviceState *dev)
     APICCommonState *s = APIC(dev);
 
     cpu_reset_interrupt(CPU(s->cpu), CPU_INTERRUPT_SIPI);
+
     if (!s->wait_for_sipi)
         return;
-
     cpu_x86_load_seg_cache_sipi(s->cpu, s->sipi_vector);
     s->wait_for_sipi = 0;
 }
@@ -1122,10 +1113,9 @@ static void apic_realize(DeviceState *dev, Error **errp)
     local_apics[s->id] = s;
 
     msi_nonbroken = true;
-	printf("%s %d apic id %d\n", __func__, __LINE__, s->id);
-	if(s->id)
-		return; 
+
     APICCommonClass *agcc = APIC_COMMON_GET_CLASS(s);
+    
     if (!qemu_chr_fe_backend_connected(&s->chr)) {
         error_setg(errp, "apic requires a backend connected to a character device");
         return;
@@ -1150,9 +1140,12 @@ static void apic_realize(DeviceState *dev, Error **errp)
     qemu_chr_fe_set_handlers(&s->chr, agcc->can_read_cb,
                              agcc->read_cb, NULL, NULL, s, NULL, true);
     
-    s->ipi_fifo_path = "/tmp/cross_arch_ipi_fifo";
-    mkfifo(s->ipi_fifo_path, 0666);
-    s->ipi_fifo_fd = open(s->ipi_fifo_path, O_RDWR);
+    s->ipi_fifo_path_in = "/tmp/cross_arch_ipi_fifo_in";
+	s->ipi_fifo_path_out = "/tmp/cross_arch_ipi_fifo_out";
+    mkfifo(s->ipi_fifo_path_in, 0666);
+	mkfifo(s->ipi_fifo_path_out, 0666);
+    s->ipi_fifo_fd_in = open(s->ipi_fifo_path_in, O_RDWR);
+	s->ipi_fifo_fd_out = open(s->ipi_fifo_path_out, O_RDWR);
    
 }
 

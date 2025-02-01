@@ -149,6 +149,7 @@ static int64_t icount_get_locked(void)
 	//Stramash, what if we fucked the icount_bias? 
     icount_to_ns(icount);
 }
+
 //Stramash 
 static int64_t icount_bias_get_locked(void)
 {

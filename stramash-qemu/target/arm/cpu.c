@@ -1546,8 +1546,7 @@ void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp)
         }
     }
 }
-//TONG: HERE is the place where we init the ARM core
-//Let's find out why the second core is not init correctly
+
 static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
 {
     CPUState *cs = CPU(dev);
@@ -2093,8 +2092,6 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
     MachineState *ms = MACHINE(qdev_get_machine());
     unsigned int smp_cpus = ms->smp.cpus;
     bool has_secure = cpu->has_el3 || arm_feature(env, ARM_FEATURE_M_SECURITY);
-	
-	printf("Tong: do we have correct smp para %d\n",smp_cpus);
 
     /*
      * We must set cs->num_ases to the final value before

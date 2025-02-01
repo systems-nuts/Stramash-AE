@@ -4369,6 +4369,13 @@ SRST
 
 ERST
 
+DEF("Stramashid", HAS_ARG, QEMU_OPTION_Stramashid, \
+    "-Stramashid [id]\n",
+    QEMU_ARCH_ALL)
+SRST
+``-Stramashid``
+ERST
+
 DEF("loadvm", HAS_ARG, QEMU_OPTION_loadvm, \
     "-loadvm [tag|id]\n" \
     "                start right away with a saved state (loadvm in monitor)\n",

@@ -1,6 +1,5 @@
 #ifndef QEMU_CONFIG_FILE_H
 #define QEMU_CONFIG_FILE_H
-
 typedef void QEMUConfigCB(const char *group, QDict *qdict, void *opaque, Error **errp);
 
 void qemu_load_module_for_opts(const char *group);

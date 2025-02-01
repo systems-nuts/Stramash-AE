@@ -138,11 +138,12 @@ static void gicv3_send_interrupt(void *opaque, int target)
         printf("target is too large\n");
         return;
     }
-	//printf("target %d\n",target);
     int recv_buf;
     GICv3State *s = opaque;
     event_notifier_set(&s->eventfd[target]);
-    read(s->ipi_fifo_fd, &recv_buf, sizeof(recv_buf));
+    read(s->ipi_fifo_fd_in, &recv_buf, sizeof(recv_buf));
+	//THIS IS SEND!! TONG
+	//printf("QEMU I'm receving \n");
     if (recv_buf != 0xdead) {
         printf("Data received is %x instead of 0xdead for arm!\n", recv_buf);
     }
@@ -642,9 +643,19 @@ static void arm_gicv3_common_realize(DeviceState *dev, Error **errp)
                              agcc->read_cb, NULL, NULL, s, NULL, true);
 
     /* create a named fifo */
-    s->ipi_fifo_name = "/tmp/cross_arch_ipi_fifo";
-    mkfifo(s->ipi_fifo_name, 0666);
-    s->ipi_fifo_fd = open(s->ipi_fifo_name, O_RDWR);
+    //s->ipi_fifo_name = "/tmp/cross_arch_ipi_fifo";
+    //mkfifo(s->ipi_fifo_name, 0666);
+    //s->ipi_fifo_fd = open(s->ipi_fifo_name, O_RDWR);
+	
+	s->ipi_fifo_path_in = "/tmp/cross_arch_ipi_fifo_out";
+	//x86 out is arm in, x86 write, arm only read
+    s->ipi_fifo_path_out = "/tmp/cross_arch_ipi_fifo_in";
+	//x86 in is arm out, x86 read, arm only write
+    mkfifo(s->ipi_fifo_path_in, 0666);
+    mkfifo(s->ipi_fifo_path_out, 0666);
+    s->ipi_fifo_fd_in = open(s->ipi_fifo_path_in, O_RDWR);
+    s->ipi_fifo_fd_out = open(s->ipi_fifo_path_out, O_RDWR);
+
     //TODO: close the fd
 
     /*

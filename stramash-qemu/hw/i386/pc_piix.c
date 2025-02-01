@@ -89,7 +89,6 @@ static int pc_pci_slot_get_pirq(PCIDevice *pci_dev, int pci_intx)
 
 /* PC hardware initialisation
  * this function gets called for -M pc
- * Which is what stramash using. Here we check if CPU is pass to guest 
  * */
 static void pc_init1(MachineState *machine,
                      const char *host_type, const char *pci_type)
@@ -176,7 +175,6 @@ static void pc_init1(MachineState *machine,
 
     pc_machine_init_sgx_epc(pcms);
     x86_cpus_init(x86ms, pcmc->default_cpu_version);
-	printf("TONG %s here we have 2 CPUs\n",__func__);
 
     if (pcmc->kvmclock_enabled) {
         kvmclock_create(pcmc->kvmclock_create_always);
@@ -202,7 +200,7 @@ static void pc_init1(MachineState *machine,
     if (pcmc->smbios_defaults) {
         MachineClass *mc = MACHINE_GET_CLASS(machine);
         /* These values are guest ABI, do not change */
-        smbios_set_defaults("QEMU", "Standard PC (i440FX + PIIX, 2024 TONG)",
+        smbios_set_defaults("QEMU", "Standard PC (i440FX + PIIX, 1996)",
                             mc->name, pcmc->smbios_legacy_mode,
                             pcmc->smbios_uuid_encoded,
                             pcms->smbios_entry_point_type);

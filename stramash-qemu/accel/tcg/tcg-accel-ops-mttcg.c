@@ -89,6 +89,7 @@ static void *mttcg_cpu_thread_fn(void *arg)
     cpu->exit_request = 1;
 
     do {
+		//printf("fuck me?\n");
         if (cpu_can_run(cpu)) {
             int r;
             qemu_mutex_unlock_iothread();
@@ -110,6 +111,7 @@ static void *mttcg_cpu_thread_fn(void *arg)
                 g_assert(cpu->halted);
                 break;
             case EXCP_ATOMIC:
+				printf("fuck Tianrui!\n");
                 qemu_mutex_unlock_iothread();
                 cpu_exec_step_atomic(cpu);
                 qemu_mutex_lock_iothread();
@@ -138,6 +140,7 @@ void mttcg_kick_vcpu_thread(CPUState *cpu)
 void mttcg_start_vcpu_thread(CPUState *cpu)
 {
     char thread_name[VCPU_THREAD_NAME_SIZE];
+
     g_assert(tcg_enabled());
     tcg_cpu_init_cflags(cpu, current_machine->smp.max_cpus > 1);
 

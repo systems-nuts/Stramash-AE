@@ -31,8 +31,10 @@ static void arm_gicv3_interrupt_cb(void *opaque)
 	gicv3_redist_send_sgi(cs, GICV3_G1NS, 7, 1);
 
 	int send_msg = 0xbeef;
+	//THIS IS RECEIVE TONG!!!
+	//printf("QEMU I'm sending \n");
 	// write to named pipe to acknowledge
-	write(s->ipi_fifo_fd, &send_msg, sizeof(send_msg));
+	write(s->ipi_fifo_fd_out, &send_msg, sizeof(send_msg));
 	(s->cpu[0]).cpu->pending_ipi = true;
 }
 

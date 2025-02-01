@@ -213,7 +213,6 @@ static void *rr_cpu_thread_fn(void *arg)
             qemu_clock_enable(QEMU_CLOCK_VIRTUAL,
                               (cpu->singlestep_enabled & SSTEP_NOTIMER) == 0);
 
-			printf("how???\n");
             if (cpu_can_run(cpu)) {
                 int r;
 

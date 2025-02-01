@@ -280,9 +280,7 @@ void x86_cpu_apic_create(X86CPU *cpu, Error **errp)
     object_property_add_child(OBJECT(cpu), "lapic",
                               OBJECT(cpu->apic_state));
     object_unref(OBJECT(cpu->apic_state));
-
-	if(!cpu->apic_id)
-		object_property_parse(OBJECT(cpu->apic_state), "x86-chr", "x86_chr", &error_fatal);
+	object_property_parse(OBJECT(cpu->apic_state), "x86-chr", "x86_chr", &error_fatal);
 
     qdev_prop_set_uint32(cpu->apic_state, "id", cpu->apic_id);
     /* TODO: convert to link<> */

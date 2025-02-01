@@ -42,6 +42,10 @@
 #include "exec/ram_addr.h"
 #include "disas/disas.h"
 #include "plugin.h"
+
+#include "cpu.h"
+#include "cpu-qom.h"
+
 #ifndef CONFIG_USER_ONLY
 #include "qemu/plugin-memory.h"
 #include "hw/boards.h"
@@ -466,6 +470,26 @@ uint64_t qemu_plugin_get_bias(void)
 void qemu_plugin_feedback(uint64_t feedback)
 {
     icount_feedback(feedback);
+}
+
+uint32_t qemu_plugin_get_cpl(void)
+{
+    CPUState *cpu = current_cpu; 
+    uint32_t cpl = 10;
+
+    #ifdef TYPE_X86_CPU
+    X86CPU *x86cpu = X86_CPU(cpu);
+    CPUX86State *env = &x86cpu->env;
+    cpl = env->segs[R_CS].selector & 0x03;
+    #endif
+
+    #ifdef TYPE_ARM_CPU
+    ARMCPU *armcpu = ARM_CPU(cpu); 
+    CPUARMState *env = &armcpu->env; 
+    cpl = env->uncached_cpsr & 0x1F;
+    #endif
+
+    return cpl;
 }
 
 

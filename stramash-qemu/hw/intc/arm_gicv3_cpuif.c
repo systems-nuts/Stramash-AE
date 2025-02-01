@@ -1797,9 +1797,7 @@ static uint64_t icc_rpr_read(CPUARMState *env, const ARMCPRegInfo *ri)
     trace_gicv3_icc_rpr_read(gicv3_redist_affid(cs), prio);
     return prio;
 }
-//TONG: here is the place generate the interrupt
-//To find out our lovely ARM cross-ISA IPI 
-//here is the place :D
+
 static void icc_generate_sgi(CPUARMState *env, GICv3CPUState *cs,
                              uint64_t value, int grp, bool ns)
 {
@@ -1813,6 +1811,7 @@ static void icc_generate_sgi(CPUARMState *env, GICv3CPUState *cs,
     uint32_t irq = extract64(value, 24, 4);
     bool irm = extract64(value, 40, 1);
     int i;
+
     if (grp == GICV3_G1 && s->gicd_ctlr & GICD_CTLR_DS) {
         /* If GICD_CTLR.DS == 1, the Distributor treats Secure Group 1
          * interrupts as Group 0 interrupts and must send Secure Group 0
@@ -1855,10 +1854,6 @@ static void icc_generate_sgi(CPUARMState *env, GICv3CPUState *cs,
     if (!irm && (targetlist == ( 0 ))) {
         ARMGICv3CommonClass *agcc = ARM_GICV3_COMMON_GET_CLASS(s);
         //TODO: which target to send interrupt to?
-		//we send to target 1 always.
-		//FIXED ARM need start first.
-		//TONG: Need enginnering works, I don't care
-		//printf("core %d send to...\n", s->vm_id);
         agcc->send_interrupt(s, s->vm_id == 1 ? 0 : 1);
     }
 

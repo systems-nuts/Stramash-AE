@@ -43,4 +43,10 @@
   qemu_plugin_tb_vaddr;
   qemu_plugin_uninstall;
   qemu_plugin_vcpu_for_each;
+  qemu_plugin_entry_code;
+  qemu_plugin_get_icount;
+  qemu_plugin_get_bias;
+  qemu_plugin_feedback;
+  qemu_plugin_set;
+  qemu_plugin_get_cpl;
 };

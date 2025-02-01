@@ -28,6 +28,7 @@
  * This is essentially the same approach kvmtool uses.
  */
 //#include <unistd.h>
+#include "stramash_config.h"
 #include "qemu/osdep.h"
 #include "qemu/datadir.h"
 #include "qemu/units.h"
@@ -405,18 +406,17 @@ static void fdt_add_cpu_nodes(const VirtMachineState *vms)
         }
     }
 
-    printf("number of cpu is %d\n", smp_cpus);
+    printf("number of cpu is %d\n", smp_cpus + 1);
 
     qemu_fdt_add_subnode(ms->fdt, "/cpus");
     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#address-cells", addr_cells);
     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#size-cells", 0x0);
 
-    //ARMCPU *armcpu = ARM_CPU(qemu_get_cpu(0));
-    for (cpu = smp_cpus - 1 ; cpu >= 0; cpu--) {
+    ARMCPU *armcpu = ARM_CPU(qemu_get_cpu(0));
+    for (cpu = smp_cpus; cpu >= 0; cpu--) {
         char *nodename = g_strdup_printf("/cpus/cpu@%d", cpu);
-        ARMCPU *armcpu = ARM_CPU(qemu_get_cpu(cpu));
-		CPUState *cs = CPU(armcpu);
-		
+        CPUState *cs = CPU(armcpu);
+
         qemu_fdt_add_subnode(ms->fdt, nodename);
         qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "cpu");
         qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
@@ -777,11 +777,9 @@ static void create_stramash_gpio(VirtMachineState *vms, MemoryRegion *mem)
 
 
 
-//TONG: here is the place init arm cross-ISA char device
-//FOR multi-core qemu, only first one is needed
+
 static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
 {
-	printf("here\n? ");
     MachineState *ms = MACHINE(vms);
     /* We create a standalone GIC */
     SysBusDevice *gicbusdev;
@@ -848,7 +846,6 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
         }
         object_property_parse(OBJECT(vms->gic), "arm-chr", "arm_chr", &error_fatal);
         printf("Finished parsing\n");
-		//TONG: the cross-ISA device name is been passed in 
     } else {
         if (!kvm_irqchip_in_kernel()) {
             qdev_prop_set_bit(vms->gic, "has-virtualization-extensions",
@@ -876,10 +873,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
      * maintenance interrupt signal to the appropriate GIC PPI inputs,
      * and the GIC's IRQ/FIQ/VIRQ/VFIQ interrupt outputs to the CPU's inputs.
      */
-	//Tong: Maybe the second cpu connect to char device has the problem
-	//should be avoid here
     for (i = 0; i < smp_cpus; i++) {
-		printf("now is smp %d to get gic\n", i);
         DeviceState *cpudev = DEVICE(qemu_get_cpu(i));
         int ppibase = NUM_IRQS + i * GIC_INTERNAL + GIC_NR_SGIS;
         int irq;
@@ -1669,12 +1663,13 @@ static void create_perf_ram(MemoryRegion *perf_sysmem,
 
     MemoryRegion *perf_mem = g_new(MemoryRegion, 1);
 
-    //char filename[256];
-    //int pid = getpid();
-    //sprintf(filename, "/dev/shm/icount_aarch64_%d", pid);
+    char resultStr[40];
+    char strStramashid[40];
+    sprintf(strStramashid, "%d", Stramashid);
+    strcpy(resultStr, "/dev/shm/icount_aarch64");
+    strcat(resultStr, strStramashid);
 
-    //memory_region_init_ram_from_file(perf_mem, NULL, name, size, 0, RAM_SHARED, filename, false , &error_fatal);
-	memory_region_init_ram_from_file(perf_mem, NULL, name, size, 0, RAM_SHARED, "/dev/shm/icount_aarch64" , false , &error_fatal);
+	memory_region_init_ram_from_file(perf_mem, NULL, name, size, 0, RAM_SHARED, resultStr, false , &error_fatal);
     memory_region_add_subregion(perf_sysmem, base  , perf_mem);
 }
 
@@ -1685,12 +1680,13 @@ static void create_shared_ram(MemoryRegion *shared_sysmem,
   hwaddr base = vms->memmap[VIRT_SHARED_MEM].base;
   hwaddr size = vms->memmap[VIRT_SHARED_MEM].size;
   MemoryRegion *shared_ram = g_new(MemoryRegion, 1);
-  
-//  char filename[256];
-//  int pid = getpid();
- // sprintf(filename, "/dev/shm/share_%d", pid);
 
- // memory_region_init_ram_from_file(shared_ram, NULL, name, size, 0, RAM_SHARED, filename, false, &error_fatal);
+  char resultStr[40];
+  char strStramashid[40];
+  sprintf(strStramashid, "%d", Stramashid);
+  strcpy(resultStr, "/dev/shm/share");
+  strcat(resultStr, strStramashid);
+
   memory_region_init_ram_from_file(shared_ram, NULL, name, size, 0, RAM_SHARED, "/dev/shm/share", false, &error_fatal);
   memory_region_add_subregion(shared_sysmem, base, shared_ram);
 }
@@ -1941,8 +1937,15 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
         printf("DEVMEM: device memory size is %lx, device_memory_base is %lx\n", device_memory_size, device_memory_base);
         ms->device_memory = g_malloc0(sizeof(*ms->device_memory));
         ms->device_memory->base = device_memory_base;
+
+        char resultStr[40];
+        char strStramashid[40];
+        sprintf(strStramashid, "%d", Stramashid);
+        strcpy(resultStr, "/dev/shm/devmem");
+        strcat(resultStr, strStramashid);
+
         memory_region_init_ram_from_file(&ms->device_memory->mr, OBJECT(vms),
-                           "ddr-share", device_memory_size, 0, RAM_SHARED, "/dev/shm/devmem", false, &error_fatal);
+                           "ddr-share", device_memory_size, 0, RAM_SHARED, resultStr, false, &error_fatal);
     }
 }
 
@@ -2402,11 +2405,8 @@ static void machvirt_init(MachineState *machine)
 
     virt_flash_fdt(vms, sysmem, secure_sysmem ?: sysmem);
 
-	//TONG: the GIC is been created 
-	printf("About to create gic\n");
     create_gic(vms, sysmem);
 
-	printf("finish create gic\n");
     virt_cpu_post_init(vms, sysmem);
 
     fdt_add_pmu_nodes(vms);

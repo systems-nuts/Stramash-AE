@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 //#include <unistd.h>
+#include "stramash_config.h"
 #include "qemu/osdep.h"
 #include "qemu/units.h"
 #include "hw/i386/x86.h"
@@ -1032,14 +1033,18 @@ void pc_memory_init(PCMachineState *pcms,
     }
 
   MemoryRegion *share_mem = g_new(MemoryRegion, 1);
-//  char filename1[256];
-//  int pid1 = getpid();
-//  sprintf(filename1, "/dev/shm/share_%d", pid1);
+
+  char resultStr[40];
+  char strStramashid[40];
+  sprintf(strStramashid, "%d", Stramashid);
+  strcpy(resultStr, "/dev/shm/share");
+  strcat(resultStr, strStramashid);
+  
 
   memory_region_init_ram_from_file(share_mem, NULL,
                                    "pc.shared-ram",
                                    0x100000, 0,
-                                   RAM_SHARED, "/dev/shm/share",
+                                   RAM_SHARED, resultStr,
                                    0,
                                    &error_fatal);
   memory_region_add_subregion(system_memory,
@@ -1047,12 +1052,14 @@ void pc_memory_init(PCMachineState *pcms,
 
   MemoryRegion *benchmark_mem = g_new(MemoryRegion, 1);
 
-//  char filename[256];
-//  int pid = getpid();
-//  sprintf(filename, "/dev/shm/icount_x64_%d", pid);
+  char resultStr2[40];
+  char strStramashid2[40];
+  sprintf(strStramashid2, "%d", Stramashid);
+  strcpy(resultStr2, "/dev/shm/icount_x64");
+  strcat(resultStr2, strStramashid2);
 
-//  memory_region_init_ram_from_file(benchmark_mem, NULL, "pc.benchmark_mem", 0x100000, 0, RAM_SHARED, filename, false ,&error_fatal);
-  memory_region_init_ram_from_file(benchmark_mem, NULL, "pc.benchmark_mem", 0x100000, 0, RAM_SHARED, "/dev/shm/icount_x64", false ,&error_fatal);
+
+  memory_region_init_ram_from_file(benchmark_mem, NULL, "pc.benchmark_mem", 0x100000, 0, RAM_SHARED, resultStr2, false ,&error_fatal);
   memory_region_add_subregion(system_memory, 0x1200000000ULL, benchmark_mem);
 
   //FIXME: add this information to e820

@@ -2991,6 +2991,7 @@ static void gen_cmpxchg8b(DisasContext *s, CPUX86State *env, int modrm)
     if (s->prefix & PREFIX_LOCK) {
         tcg_gen_atomic_cmpxchg_i64(old, s->A0, cmp, val, s->mem_index, MO_TEUQ);
     } else {
+		printf("hehe\n");
         tcg_gen_nonatomic_cmpxchg_i64(old, s->A0, cmp, val,
                                       s->mem_index, MO_TEUQ);
     }
@@ -3043,6 +3044,7 @@ static void gen_cmpxchg16b(DisasContext *s, CPUX86State *env, int modrm)
     if (s->prefix & PREFIX_LOCK) {
         tcg_gen_atomic_cmpxchg_i128(val, s->A0, cmp, val, s->mem_index, mop);
     } else {
+		printf("caigou\n");
         tcg_gen_nonatomic_cmpxchg_i128(val, s->A0, cmp, val, s->mem_index, mop);
     }
 

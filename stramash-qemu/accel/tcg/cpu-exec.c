@@ -537,6 +537,8 @@ void cpu_exec_step_atomic(CPUState *cpu)
     uint32_t flags, cflags;
     int tb_exit;
 
+	//tlb_flush(cpu); //hack tong
+	//printf("atomic we flush\n");
 
     if (sigsetjmp(cpu->jmp_env, 0) == 0) {
         start_exclusive();

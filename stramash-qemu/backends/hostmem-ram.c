@@ -9,12 +9,12 @@
  * This work is licensed under the terms of the GNU GPL, version 2 or later.
  * See the COPYING file in the top-level directory.
  */
-//#include <unistd.h>
 #include "qemu/osdep.h"
 #include "sysemu/hostmem.h"
 #include "qapi/error.h"
 #include "qemu/module.h"
 #include "qom/object_interfaces.h"
+#include "stramash_config.h"
 
 static void
 ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
@@ -34,11 +34,15 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
 	//Tong: apply patch +-
     //memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend), name,
     //                                     backend->size, ram_flags, errp);
-//	char filename[256];
-  //  int pid = getpid();
-   // sprintf(filename, "/dev/shm/ddr-share_%d", pid);
+
+    char resultStr[40];
+    char strStramashid[40];
+    sprintf(strStramashid, "%d", Stramashid);
+    strcpy(resultStr, "/dev/shm/ddr-share");
+    strcat(resultStr, strStramashid);
+
     memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name, 
-								backend->size, 0, RAM_SHARED, "/dev/shm/ddr-share", false ,errp);
+								backend->size, 0, RAM_SHARED, resultStr, false ,errp);
 	//Tong: patch done
     g_free(name);
 }

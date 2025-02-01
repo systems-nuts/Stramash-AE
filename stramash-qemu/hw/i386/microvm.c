@@ -469,6 +469,7 @@ static void microvm_machine_state_init(MachineState *machine)
     X86MachineState *x86ms = X86_MACHINE(machine);
 
     microvm_memory_init(mms);
+
     x86_cpus_init(x86ms, CPU_VERSION_LATEST);
 
     microvm_devices_init(mms);

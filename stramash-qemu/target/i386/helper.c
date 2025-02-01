@@ -584,6 +584,7 @@ void do_cpu_init(X86CPU *cpu)
     CPUX86State *env = &cpu->env;
     CPUX86State *save = g_new(CPUX86State, 1);
     int sipi = cs->interrupt_request & CPU_INTERRUPT_SIPI;
+
     *save = *env;
 
     cpu_reset(cs);

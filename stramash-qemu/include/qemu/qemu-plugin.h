@@ -667,7 +667,9 @@ uint64_t qemu_plugin_end_code(void);
 uint64_t qemu_plugin_entry_code(void);
 
 uint64_t qemu_plugin_get_icount(void);
+
 uint64_t qemu_plugin_get_bias(void);
 void qemu_plugin_feedback(uint64_t);
 void qemu_plugin_set(uint64_t);
+uint32_t qemu_plugin_get_cpl(void);
 #endif /* QEMU_QEMU_PLUGIN_H */

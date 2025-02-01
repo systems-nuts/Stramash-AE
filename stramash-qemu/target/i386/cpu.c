@@ -6740,9 +6740,11 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
         }
     }
 #endif
-	
+
     mce_init(cpu);
+
     qemu_init_vcpu(cs);
+
     /*
      * Most Intel and certain AMD CPUs support hyperthreading. Even though QEMU
      * fixes this issue by adjusting CPUID_0000_0001_EBX and CPUID_8000_0008_ECX

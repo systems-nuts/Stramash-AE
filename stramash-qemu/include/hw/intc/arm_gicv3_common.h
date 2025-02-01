@@ -291,8 +291,12 @@ struct GICv3State {
     int msg_buffered_bytes; // number in msg_buf used
     int vm_id;
 
-	const char *ipi_fifo_name;
-	int ipi_fifo_fd;
+//	const char *ipi_fifo_name;
+//	int ipi_fifo_fd;
+	const char* ipi_fifo_path_out;
+    const char* ipi_fifo_path_in;
+    int ipi_fifo_fd_out;
+    int ipi_fifo_fd_in;	
 };
 
 #define GICV3_BITMAP_ACCESSORS(BMP)                                     \

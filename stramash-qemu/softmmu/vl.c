@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
+#include "stramash_config.h"
 #include "qemu/osdep.h"
 #include "qemu/help-texts.h"
 #include "qemu/datadir.h"
@@ -136,7 +136,7 @@
 #include "qemu/keyval.h"
 
 #define MAX_VIRTIO_CONSOLES 1
-
+int Stramashid = 0;
 typedef struct BlockdevOptionsQueueEntry {
     BlockdevOptions *bdo;
     Location loc;
@@ -263,6 +263,18 @@ static QemuOptsList qemu_accel_opts = {
          * when setting accelerator properties
          */
         { }
+    },
+};
+
+
+static QemuOptsList qemu_Stramashid_opts = {
+    .name = "Stramashid",
+    .implied_opt_name = "Stramashid",
+    .head = QTAILQ_HEAD_INITIALIZER(qemu_Stramashid_opts.head),
+    .desc = {
+        { .name = "id",
+          .type = QEMU_OPT_NUMBER, 
+        }
     },
 };
 
@@ -2674,6 +2686,9 @@ void qemu_init(int argc, char **argv)
     qemu_add_opts(&qemu_semihosting_config_opts);
     qemu_add_opts(&qemu_fw_cfg_opts);
     qemu_add_opts(&qemu_action_opts);
+
+    qemu_add_opts(&qemu_Stramashid_opts);
+
     module_call_init(MODULE_INIT_OPTS);
 
     error_init(argv[0]);
@@ -3157,6 +3172,10 @@ void qemu_init(int argc, char **argv)
             case QEMU_OPTION_debugcon:
                 add_device_config(DEV_DEBUGCON, optarg);
                 break;
+            case QEMU_OPTION_Stramashid:{
+                Stramashid = atoi(optarg);
+                break;
+            }
             case QEMU_OPTION_loadvm:
                 loadvm = optarg;
                 break;
