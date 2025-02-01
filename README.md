@@ -48,8 +48,7 @@ sudo ./set_up.sh
 sudo ./start.sh # Will start 3 Machines
 sudo ./end.sh
 ```
-#### 6. Run NPB Benchmarks
-<span style="color:red;">需要完善</span>
+#### 6. Run NPB Benchmarks **Todo**
 ```bash
 # User: Root
 # Passward: stramash
@@ -71,9 +70,11 @@ cd ./NPB_AE/mg;cat /proc/cache_sync_switch;cat /proc/popcorn_icount_switch;
 ```
 
 
-#### 7. Check the Results
+#### 7. Check the Results **Todo**
 Final Runtime = x86 Runtime + arm Runtime
 
 Fully Shared = Final Runtime - Remote Memory Hits  * 0.455
+
+
 ![1ce570995205f6cba0bf2e43502fb43](https://github.com/user-attachments/assets/0a496074-2221-4b9a-8fbc-352ef0180740)
 
