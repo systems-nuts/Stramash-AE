@@ -3,7 +3,7 @@ declare -a commands=("stramash" "stramash2" "shm")
 declare -a name=("Stramash Shared" "Stramash Separated" "SHM") 
 declare -a size=("4")
 
-no_plugin=1
+no_plugin=0
 
 tmux kill-server
 ./daemon.sh $1
