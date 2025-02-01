@@ -46,10 +46,8 @@ if [ "$1" = "1" ]; then
         -chardev socket,path=$SOCKET2,id=arm_chr \
         -drive id=root,if=none,readonly=$READONLY,media=disk,file=$FILE_SYSTEM\
         -device virtio-blk-device,drive=root \
-        -drive file=disk2.img,if=none,readonly=on,id=D1 \
-        -device virtio-blk-device,drive=D1,serial=2234 \
         -kernel $KERNEL \
-        -append "nokaslr root=/dev/vdb rw console=ttyAMA0" 
+        -append "nokaslr root=/dev/vda rw console=ttyAMA0" 
 
 else
     sudo ../build/qemu-system-aarch64 \
@@ -60,10 +58,8 @@ else
         -chardev socket,path=$SOCKET2,id=arm_chr \
         -drive id=root,if=none,readonly=$READONLY,media=disk,file=$FILE_SYSTEM \
         -device virtio-blk-device,drive=root \
-        -drive file=disk2.img,if=none,readonly=on,id=D1 \
-        -device virtio-blk-device,drive=D1,serial=2234 \
         -kernel $KERNEL \
-        -append "nokaslr root=/dev/vdb rw console=ttyAMA0" \
+        -append "nokaslr root=/dev/vda rw console=ttyAMA0" \
         -plugin $PLUGIN,test=$TEST,stramashid=$2,mode=$MODE \
         -d plugin \
         -icount shift=1

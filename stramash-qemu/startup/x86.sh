@@ -45,8 +45,6 @@ if [ "$1" = "1" ]; then
         -chardev socket,path=$SOCKET2,id=x86_chr \
         -drive id=root,if=none,readonly=$READONLY,media=disk,file=$FILE_SYSTEM \
         -device virtio-blk-pci,drive=root \
-        -drive file=disk1.img,readonly=on,if=none,id=D1 \
-        -device virtio-blk-pci,drive=D1,serial=1234 \
         -kernel $KERNEL \
         -append "nokaslr root=/dev/vda rw console=ttyS0" 
 else
@@ -57,8 +55,6 @@ else
         -chardev socket,path=$SOCKET2,id=x86_chr \
         -drive id=root,if=none,readonly=$READONLY,media=disk,file=$FILE_SYSTEM \
         -device virtio-blk-pci,drive=root \
-        -drive file=disk1.img,readonly=on,if=none,id=D1 \
-        -device virtio-blk-pci,drive=D1,serial=1234 \
         -kernel $KERNEL \
         -append "nokaslr root=/dev/vda rw console=ttyS0" \
         -plugin $PLUGIN,test=$TEST,stramashid=$2,mode=$MODE \

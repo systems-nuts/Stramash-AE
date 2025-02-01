@@ -1472,9 +1472,9 @@ static void vcpu_insn_exec(unsigned int vcpu_index, void *userdata)
 
     if (shmcatalog->start_sim == 1)
     {
-
+/*
         if (qemu_plugin_get_ipi() == 1)
-        {
+  {
             shmcatalog->running_info->ipi++;
 
             if (mode == STRAMASH)
@@ -1490,7 +1490,7 @@ static void vcpu_insn_exec(unsigned int vcpu_index, void *userdata)
                 add_runtime(75000);
             }
         }
-
+*/
         shmcatalog->running_info->nr_of_inst++;
         add_runtime(1);
 

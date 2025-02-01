@@ -1,4 +1,5 @@
 #!/bin/bash
+exit
 sudo umount temp_mnt1 &> /dev/null
 sudo umount temp_mnt2 &> /dev/null
 

@@ -16,9 +16,9 @@ for ARCH in "${ARCHES[@]}"; do
   echo "[*] Building Debian $DEBIAN_RELEASE for ARCH=$ARCH"
   echo "============================================="
 
-  IMG="/mnt/shared/rootfs-${ARCH}.img"
-  DIR="/mnt/shared/temp-${ARCH}"
-  ROOTFS="/mnt/shared/rootfs-${ARCH}"
+  IMG="./rootfs-${ARCH}.img"
+  DIR="./temp-${ARCH}"
+  ROOTFS="./rootfs-${ARCH}"
 
   # ---------- Step 1: Clean up old environment ----------
   echo "[*] Creating temporary mount directory: $DIR"
@@ -127,4 +127,4 @@ EOF
 done
 
 echo "[Finished] Debian $DEBIAN_RELEASE images created for: ${ARCHES[*]}"
-echo "Check /mnt/shared/ for rootfs-amd64.img and rootfs-arm64.img."
+echo "Check ./ for rootfs-amd64.img and rootfs-arm64.img."
