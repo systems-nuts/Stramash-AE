@@ -17,8 +17,8 @@ cp -r $popcorn/popcorn_x86/msg_layer/msg_shm.ko $target/kernel/x86/shm_msg_shm.k
 cp -r $popcorn/popcorn_arm/msg_layer/msg_shm.ko $target/kernel/arm/shm_msg_shm.ko
 
 echo "Copy FS..."
-mv rootfs-arm64.img $target/arm_rootfs.img
-mv rootfs-amd64.img $target/x86_rootfs.img
+mv rootfs-arm64.img $target/arm_rootfs1.img &> /dev/null
+mv rootfs-amd64.img $target/x86_rootfs1.img &> /dev/null
 
 echo "Copy NPB benchmarks..."
 
@@ -29,8 +29,8 @@ mkdir -p ./temp_mnt2
 sudo umount temp_mnt1 &> /dev/null
 sudo umount temp_mnt2 &> /dev/null
 
-sudo mount x86_rootfs.img temp_mnt1
-sudo mount arm_rootfs.img temp_mnt2
+sudo mount x86_rootfs1.img temp_mnt1
+sudo mount arm_rootfs1.img temp_mnt2
 
 sudo cp -p ./kernel/x86/*.ko temp_mnt1/root
 sudo cp -p ./kernel/arm/*.ko temp_mnt2/root
@@ -59,5 +59,12 @@ for file in ./NPB_AE/*_aarch64; do
 done
 sudo cp -rp ./NPB_AE temp_mnt2/root/
 # /////////////////////////////////////////////
+sudo umount temp_mnt1 &> /dev/null
+sudo umount temp_mnt2 &> /dev/null
+
+rm -r ./temp_mnt1
+rm -r ./temp_mnt2
+
+
 cd -
 echo finished.
