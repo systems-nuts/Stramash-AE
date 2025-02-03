@@ -37,7 +37,7 @@ sudo docker exec -it -w "$(STRAMASH_ROOT)" stramash_container /bin/bash
 ./build_kernel.sh (OPTIONAL, we have provided pre-built image and kernel module) 
 # Build qemu
 ./build_qemu.sh
-exit
+exit the docker container. now back to host env
 ```
 #### 4. Set up the Kernel and file system
 ```bash
