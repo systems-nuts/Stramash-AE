@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     qemu \
     qemu-user-static \
-	gcc-aarch64-linux-gnu \
+    gcc-9-aarch64-linux-gnu  \
     binfmt-support \
     qemu-utils \
     debootstrap \
