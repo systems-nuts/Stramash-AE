@@ -27,21 +27,26 @@ sudo docker exec -it -w "$(STRAMASH_ROOT)" stramash_container /bin/bash
 # sudo docker stop stramash_container
 # sudo docker rm stramash_container
 ```
-#### 3. Build Kernel, file system, and Qemu
+#### 3. Build Kernel(OPTIONAL), file system, and Qemu 
 ```bash
 # Run inside the container
 
 # Build X86 and Arm File System
 ./build_fs.sh
 # Build Popcorn and Stramash Kernel
-./build_kernel.sh
+./build_kernel.sh (OPTIONAL, we have provided pre-built image and kernel module) 
 # Build qemu
 ./build_qemu.sh
 exit
 ```
 #### 4. Set up the Kernel and file system
 ```bash
-sudo ./set_up.sh 
+(IF Kernel compiled before)
+sudo ./set_up.sh
+--------------------------------------------
+(IF NO Kernel compiled before)
+chmod +x setup_no_kernel_compile.sh
+sudo ./setup_no_kernel_compile.sh
 ```
 #### 5. Start Stramash
 ```bash
