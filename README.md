@@ -10,7 +10,7 @@ stramash-qemu is Stramash QEMU
 cd Stramash-AE
 STRAMASH_ROOT=$(pwd)
 ```
-#### 2. Build the Docker for Compiling
+#### 2. Build the Docker for Compiling (For Cloud VM, please direct lunch a ubuntu22.06 instance and run everything out side is OK, please just copy the apt get part inside Dockerfile.
 ```bash
 cd $STRAMASH_ROOT/docker
 
