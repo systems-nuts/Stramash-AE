@@ -80,9 +80,13 @@ insmod shm_msg_shm.ko
 
 Please run the following command.
 
-# Run NPB benchmark, each took hours on a strong core. 
+# Run NPB benchmark, each took hours on a strong core.
+The binary is located at stramash-qemu/startup/NPB_AE on the host
+our script will help you to copy everything inside here into QEMU machines  -- there are many helper scripts as well.
+
 $BIN could be one of the 4 (cg/is/ft/mg)
-cd ./NPB_AE/$BIN;cat /proc/cache_sync_switch;cat /proc/popcorn_icount_switch;
+inside qemu run the following command on ARM, the binary will migrate to arm in the middle, and migrate back upon finished(because only x86 can do print)
+./NPB_AE/$BIN;cat /proc/cache_sync_switch;cat /proc/popcorn_icount_switch;
 ```
 
 
