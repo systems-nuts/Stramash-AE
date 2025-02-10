@@ -99,10 +99,13 @@ The EXPERIMENT WE ARE EVALUATION IS: Figure 9. NPB benchmark results
 Both Shared and Separated model
 Final Runtime = x86 Runtime + arm Runtime
 
-For the Fully Shared model, because there is no remote access, we can just
+For the Fully Shared model, because there is no remote access, we can approximate it by 
  minus the feedback instruction from our cache model
-Fully Shared = Final Runtime - Remote Memory Hits  * 0.455 (Either use the result from the Separated model or Shared model) 
+But because the Fully Shared model uses shared L3, to get precise results,
+please reconfigure the Cache-Plugin at stramash-qemu/contrib/plugins/cache-sim-feedback.c at L2328 and L2350
+and recompile the QEMU at https://github.com/systems-nuts/Stramash-AE/blob/main/stramash-qemu/contrib/plugins/cache-sim-feedback.c
 
+Fully Shared = Final Runtime - Remote Memory Hits  * 0.455 (Either use the result from the Separated model or Shared model) 
 0.455 is the difference between remote access and local access.
 Check the file  -> https://github.com/systems-nuts/Stramash-AE/blob/main/stramash-qemu/contrib/plugins/cache-sim-feedback.c#L215
 #define Local_mem_overhead 360
