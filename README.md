@@ -50,15 +50,17 @@ sudo ./setup_no_kernel_compile.sh
 ```
 #### 5. Start Stramash
 ```bash
-sudo ./start.sh # Will start 3 Machines
-sudo ./end.sh
+sudo ./start.sh # Will start 3 pairs of Stramash Machines
+sudo ./end.sh # Use for help turn off all the Stramash Machine 
 ```
-#### 6. Run NPB Benchmarks **Todo**
+#### 6. Run NPB Benchmarks 
 ```bash
 # User: Root
 # Passward: stramash
 
-For Stramash, both kernels need insert the module 
+Now the 3 pairs of Stramash Machines are running inside 3 paris of TMUX windows in 1 session
+Inside the Stramash-QEMU now.... Please run everything inside the QEMU
+For Stramash, both kernels need to insert the module 
 We have 3 different memory models, once the start opens, it opens 3 pair of machines in 3 windows with 1 tmux session
 First is the Stramash Shard model, Second is the Stramash Separated model, and Third is the SHM
 
@@ -73,7 +75,7 @@ insmod shm_msg_shm.ko
 
 Please run the following command.
 
-# Run NPB benchmark
+# Run NPB benchmark, each took hours on a strong core. 
 $BIN could be one of the 4 (cg/is/ft/mg)
 cd ./NPB_AE/$BIN;cat /proc/cache_sync_switch;cat /proc/popcorn_icount_switch;
 ```
