@@ -34,10 +34,15 @@ sudo docker exec -it -w "$(STRAMASH_ROOT)" stramash_container /bin/bash
 # Build X86 and Arm File System
 ./build_fs.sh
 # Build Popcorn and Stramash Kernel
-./build_kernel.sh (OPTIONAL, we have provided pre-built image and kernel module) 
+./build_kernel.sh (OPTIONAL, we have provided a pre-built image and kernel module) 
 # Build qemu
 ./build_qemu.sh
-exit the docker container. now back to host env
+exit the docker container. now back to the host env ->!!!exit docker container!!!
+Remember, the Dockerfile is only for helping build the kernel and QEMU.
+You can also build it locally if you have ubuntu22.04, you can just check all the step at Dockerfile
+For QEMU there are some lib needs. Please consider also running the apt-get install command in the docker/Dockerfile
+But it depends on your machine's environment. 
+
 ```
 #### 4. Set up the Kernel and file system
 ```bash
@@ -58,13 +63,13 @@ sudo ./end.sh # Use for help turn off all the Stramash Machine
 # User: Root
 # Passward: stramash
 
-Now the 3 pairs of Stramash Machines are running inside 3 paris of TMUX windows in 1 session
-Inside the Stramash-QEMU now.... Please run everything inside the QEMU
+Now the 3 pairs of Stramash Machines are running inside 3 pairs of TMUX windows in 1 session
+Inside the Stramash-QEMU now... Please run everything inside the QEMU
 For Stramash, both kernels need to insert the module 
-We have 3 different memory models, once the start opens, it opens 3 pair of machines in 3 windows with 1 tmux session
+We have 3 different memory models, once the start opens, it opens 3 pairs of machines in 3 windows with 1 tmux session
 First is the Stramash Shard model, Second is the Stramash Separated model, and Third is the SHM
 
-In each tmux window, you see 2 machines, left is x86,and  right is arm, or you can use $(uname -a) to check
+In each tmux window, you see 2 machines, left is x86, and right is arm, or you can use $(uname -a) to check
 Remember depends on speed, usually x86 is slower since it has more instructions,
 so insert the module on x86 side first, wait for 3sec, insert arm module
 
@@ -92,7 +97,7 @@ Final Runtime = x86 Runtime + arm Runtime
 
 For the Fully Shared model, because there is no remote access, we can just
  minus the feedback instruction from our cache model
-Fully Shared = Final Runtime - Remote Memory Hits  * 0.455 (Either use the result from Separated model or Shared model) 
+Fully Shared = Final Runtime - Remote Memory Hits  * 0.455 (Either use the result from the Separated model or Shared model) 
 
 0.455 is the difference between remote access and local access.
 Check the file  -> https://github.com/systems-nuts/Stramash-AE/blob/main/stramash-qemu/contrib/plugins/cache-sim-feedback.c#L215
@@ -110,7 +115,7 @@ Same since fully shared doesn't have remote access.
 SHM Separated = Final Runtime - Remote Memory Hits(only x86) * 0.455
 Because in the separated model, the x86 access to the shared memory ring is local,
 while it is exposed to the arm through sim CXL, so we consider arm access to be remote access,
-so the total runtime will be minus by the Remote Memory Hits of x86, which we consider is local now.
+so the total runtime will be minus the Remote Memory Hits of x86, which we consider to be local now.
 
 For the Shared model, both access to the ring buffer will be considered as remote, just  => x86 Runtime + arm Runtime
 
