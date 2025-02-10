@@ -101,7 +101,7 @@ Final Runtime = x86 Runtime + arm Runtime
 
 For the Fully Shared model, because there is no remote access, we can approximate it by 
  minus the feedback instruction from our cache model
-But because the Fully Shared model uses shared L3, to get precise results,
+But because the Fully Shared model uses shared L3 cache, to get precise results,
 please reconfigure the Cache-Plugin at stramash-qemu/contrib/plugins/cache-sim-feedback.c at L2328 and L2350
 and recompile the QEMU at https://github.com/systems-nuts/Stramash-AE/blob/main/stramash-qemu/contrib/plugins/cache-sim-feedback.c
 
