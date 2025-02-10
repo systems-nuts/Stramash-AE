@@ -2,7 +2,7 @@
 set -e
 
 DEBIAN_RELEASE="buster"
-SIZE="10G"
+SIZE="5G"
 DEBIAN_SRC="http://deb.debian.org/debian/"
 
 ARCHES=("amd64" "arm64")
