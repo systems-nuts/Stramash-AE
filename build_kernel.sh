@@ -3,6 +3,9 @@ set -e
 
 CPU=16
 
+sudo apt-get update
+sudo apt-get install -y gcc-aarch64-linux-gnu
+
 cd ./popcorn_kernel/popcorn_x86
 cp kernel-config .config
 make oldconfig
