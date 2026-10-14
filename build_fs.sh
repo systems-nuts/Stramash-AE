@@ -3,12 +3,12 @@ set -e
 
 DEBIAN_RELEASE="buster"
 SIZE="5G"
-DEBIAN_SRC="http://deb.debian.org/debian/"
+DEBIAN_SRC="http://archive.debian.org/debian/"
 
 ARCHES=("amd64" "arm64")
 
 sudo apt-get update
-sudo apt-get install -y qemu-user-static binfmt-support
+sudo apt-get install -y qemu-user-static binfmt-support debian-archive-keyring
 sudo update-binfmts --enable qemu-aarch64
 
 for ARCH in "${ARCHES[@]}"; do
